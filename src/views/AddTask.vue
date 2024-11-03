@@ -15,10 +15,10 @@
             <div v-for="task in tasks" :key="task.id" class="task-item">
                 <span :class="{ completed: task.completed }">{{ task.todo }}</span>
                 <div>
-                    <button @click="toggleTaskCompletion(task)">
+                    <button @click="toggleTaskCompletion(task)" class="task-action-button">
                         {{ task.completed ? 'Desmarcar' : 'Completar' }}
                     </button>
-                    <button @click="deleteTask(task)">Eliminar</button>
+                    <button @click="deleteTask(task)" class="task-action-button">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -47,16 +47,19 @@ export default {
             // Añadir la nueva tarea al inicio de la lista
             this.tasks.unshift(newTask);
             this.newTask = ""; // Limpiar el campo de entrada después de agregar
+            alert('¡Tarea añadida!');
         },
 
         // Elimina una tarea específica de la lista
         deleteTask(task) {
             this.tasks = this.tasks.filter((t) => t.id !== task.id);
+            alert('Tarea eliminada');
         },
 
         // Cambia el estado de la tarea entre completada y no completada
         toggleTaskCompletion(task) {
             task.completed = !task.completed;
+            alert(task.completed ? 'Tarea completada' : 'Tarea desmarcada');
         },
     },
 };
@@ -67,6 +70,9 @@ export default {
     padding: 20px;
     max-width: 400px;
     margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .input-group {
@@ -86,9 +92,14 @@ export default {
     padding: 8px 12px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    background-color: #28a745;
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-button:hover {
+    background-color: #218838;
 }
 
 .task-list {
@@ -101,10 +112,29 @@ export default {
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #eee;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.task-item:last-child {
+    border-bottom: none;
 }
 
 .completed {
     text-decoration: line-through;
     color: gray;
+}
+
+.task-action-button {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.task-action-button:hover {
+    text-decoration: underline;
 }
 </style>
